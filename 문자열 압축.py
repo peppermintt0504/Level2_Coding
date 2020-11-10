@@ -1,31 +1,28 @@
 def solution(s):
-    temp = []
-    ans = []
+    answer = []
+    divi = []
     
-    for i in range(int(len(s)/2)) :
+    for i in range(1, int(len(s) / 2) + 2) :
+        for j in range(int(len(s) / i ) + 1) :
+            if s[(j * i) : (j * i) + i] == '' : break
+            divi.append(s[(j * i) : (j * i) + i])
         
-        n = 0
-        while 1 :
+        con = 0
+        answer.append(0)
+        for d in range(len(divi)) : 
             
-            if s[(n * (i + 1)) : (n * (i + 1)) + i + 1] == '' : break
-            temp.append(s[(n * (i + 1)) : (n * (i + 1)) + i + 1])     
-            n += 1
-        
-        ans.append(0)
-        conti = 0 
-        for n in range(len(temp)) :
-            if n == len(temp) - 1 : 
-                ans[i] += len(temp[n])
+            if d == len(divi) - 1 :
+                con = 0 
+                answer[i-1] += len(divi[d])
                 break
             
-            if temp[n] == temp[n + 1] :
-                if conti != 1 :
-                    conti = 1 
-                    ans[i] += 1
-            else :
-                ans[i] += (i + 1)
-                conti = 0
-            
-        temp.clear()  
-    
-    return min(ans)
+            if divi[d] == divi[d+1] :
+                if con == 0 :
+                    con = 1
+                    answer[i-1] += 1
+                else : 0
+            else : 
+                con = 0 
+                answer[i-1] += len(divi[d])
+        divi.clear()    
+    return min(answer)
